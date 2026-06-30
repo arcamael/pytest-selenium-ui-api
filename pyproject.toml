@@ -33,7 +33,7 @@ python_functions = ["test_*"]
 # Fail fast on unknown markers so typos don't silently skip selection.
 # Allure results are written on every run; render them with the `allure` CLI
 # (see README). reports/ is git-ignored.
-addopts = "-ra --strict-markers --alluredir=reports/allure-results --clean-alluredir"
+addopts = "-ra --strict-markers --tb=short --alluredir=reports/allure-results --clean-alluredir"
 
 markers = [
     "ui: end-to-end tests driving the browser via Selenium (slow, needs Chrome)",

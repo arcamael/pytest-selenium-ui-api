@@ -11,7 +11,8 @@ from typing import Any
 
 import pytest
 
-from api.schemas import ERROR_ENVELOPE_FIELDS, ErrorCode
+from api.assertions import assert_rejected
+from api.schemas import ErrorCode
 from utils.money import decimal_from_float
 
 OMIT = object()
@@ -45,13 +46,10 @@ def test_invalid_stake_is_rejected(api, reset_balance, upcoming_match, stake, ex
         body["stake"] = stake
     response = api.place_bet_raw(body)
 
-    assert response.status_code == expected_status, response.text
-    body_json = response.json()
-    assert set(body_json) == ERROR_ENVELOPE_FIELDS, (
-        f"rejection envelope must be exactly {set(ERROR_ENVELOPE_FIELDS)}: {response.text}"
+    assert_rejected(
+        response,
+        expected_status=expected_status,
+        expected_error=expected_error,
     )
-    assert body_json.get("error") == expected_error, f"wrong error code: {response.text}"
-    assert body_json.get("message") == expected_error.message, f"wrong message: {response.text}"
-    assert decimal_from_float(api.get_balance().json()["balance"]) == baseline, (
-        "rejected bet must not change the balance"
-    )
+    final_balance = decimal_from_float(api.get_balance().json()["balance"])
+    assert final_balance == baseline, f"Rejected bet must not change balance: was {baseline}, now {final_balance} "

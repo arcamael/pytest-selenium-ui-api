@@ -6,7 +6,7 @@
 |---|---|
 | [docs/test_plan.md](docs/test_plan.md) | Prioritized test scenarios |
 | [docs/bug_reports.md](docs/bug_reports.md) | Execution results & defects |
-| `tests/` | Automation framework + tests |
+| `tests/` | ui and api tests |
 | [docs/strategy.md](docs/strategy.md) | Test strategy & scale-up recommendations |
 
 ## Prerequisites
