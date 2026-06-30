@@ -49,7 +49,7 @@ make test-local mark=ui   # UI tests only
 
 1. **Actions** → **"Run tests"** (triggered manually).
 2. The Allure report is published to GitHub Pages:
-   **https://arcamael.github.io/sporty-tech-task/**.
+   **https://arcamael.github.io/pytest-selenium-ui-api/**.
 
 ## Dependency management
 
