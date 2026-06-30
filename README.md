@@ -49,14 +49,3 @@ make test-local mark=ui   # UI tests only
 1. **Actions** → **"Run tests"** (triggered manually).
 2. The Allure report is published to GitHub Pages:
    **https://arcamael.github.io/sporty-tech-task/**.
-
-## Dependency management
-
-Dependencies are declared in `pyproject.toml` and pinned in `poetry.lock`.
-
-```bash
-poetry add <pkg>          # add a runtime dependency
-poetry add --group test <pkg>   # add a test-only dependency
-poetry update             # refresh the lock file within constraints
-make lock                 # re-lock and reinstall after editing pyproject.toml
-```
