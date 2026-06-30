@@ -1,5 +1,5 @@
 [project]
-name = "sporty-tech-task"
+name = "pytest-selenium-ui-api"
 version = "0.1.0"
 description = "Single Bet Placement test suite (Selenium UI + requests API)"
 readme = "README.md"
