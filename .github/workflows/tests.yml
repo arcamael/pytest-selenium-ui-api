@@ -52,7 +52,8 @@ jobs:
         run: poetry install
 
       - name: Run tests
-        continue-on-error: true   # publish the report even when tests fail
+        id: tests
+        continue-on-error: true   # don't stop here; publish the report first, then fail the job below
         env:
           USER_ID: ${{ secrets.USER_ID }}
           HEADLESS: "true"
@@ -91,3 +92,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+
+      - name: Fail if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: |
+          echo "::error::Test run reported failures — see the Allure report."
+          exit 1
