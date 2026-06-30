@@ -1,0 +1,54 @@
+[project]
+name = "sporty-tech-task"
+version = "0.1.0"
+description = "Single Bet Placement test suite (Selenium UI + requests API)"
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+# Runtime libraries the framework code imports directly.
+dependencies = [
+    "selenium (>=4.45,<5.0)",      # UI automation; bundles Selenium Manager (auto-resolves chromedriver)
+    "requests (>=2.34,<3.0)",      # direct API testing
+    "python-dotenv (>=1.2,<2.0)",  # load local .env overrides (USER_ID, BASE_URL, HEADLESS)
+]
+
+[tool.poetry]
+# This is a test-automation suite, not a distributable library — disable
+# packaging so Poetry only manages the virtualenv and dependencies.
+package-mode = false
+
+[tool.poetry.group.test.dependencies]
+# Test runner and reporting tooling.
+pytest = "^9.1"          # test runner / fixtures
+pytest-check = "^2.8"    # soft assertions: collect every failed check in one run
+allure-pytest = "^2.16"  # rich HTML test report (steps, attachments, screenshots)
+ruff = "^0.15.20"       # linter + formatter
+pre-commit = "^4.6.0"   # git hook runner (ruff + poetry check on commit)
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Fail fast on unknown markers so typos don't silently skip selection.
+# Allure results are written on every run; render them with the `allure` CLI
+# (see README). reports/ is git-ignored.
+addopts = "-ra --strict-markers --alluredir=reports/allure-results --clean-alluredir"
+
+markers = [
+    "ui: end-to-end tests driving the browser via Selenium (slow, needs Chrome)",
+    "api: tests hitting the HTTP API directly via requests (fast)",
+    "known_bug: asserts spec-correct behaviour the API does not yet honour; fails today against a filed defect (arg = BUG id) and turns green when fixed. Exclude with -m \"not known_bug\" for a green gate. See docs/bug_reports.md.",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+# pycodestyle (E/W), pyflakes (F), isort (I), pyupgrade (UP), flake8-bugbear (B).
+select = ["E", "W", "F", "I", "UP", "B"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"

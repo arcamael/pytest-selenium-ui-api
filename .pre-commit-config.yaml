@@ -1,0 +1,19 @@
+# Run with: poetry run pre-commit run --all-files
+# Install the git hook with: poetry run pre-commit install
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.20
+    hooks:
+      - id: ruff-check    # lint (auto-fixes what it safely can)
+        args: [--fix]
+      - id: ruff-format   # format
+
+  - repo: local
+    hooks:
+      - id: poetry-check
+        name: poetry check
+        description: Validate pyproject.toml and lock-file consistency.
+        entry: poetry check --lock
+        language: system
+        pass_filenames: false
+        files: ^(pyproject\.toml|poetry\.lock)$
