@@ -6,7 +6,6 @@ ERROR_ENVELOPE_FIELDS: frozenset[str] = frozenset({"error", "message"})
 
 
 class ErrorCode(StrEnum):
-
     INVALID_STAKE_MIN = ("invalid_stake_min", "Stake must be at least 1.00.")
     INVALID_STAKE_MAX = ("invalid_stake_max", "Stake must be at most 100.00.")
     INVALID_STAKE_PRECISION = ("invalid_stake_precision", "Stake can have up to 2 decimal places.")

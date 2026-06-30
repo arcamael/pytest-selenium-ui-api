@@ -23,9 +23,7 @@ class BettingClient:
     ) -> None:
         # Resolve from settings at call time (not at def time) so per-test
         # overrides / monkeypatching of ``settings`` take effect.
-        self.base_url = (
-            base_url if base_url is not None else settings.API_BASE_URL
-        ).rstrip("/")
+        self.base_url = (base_url if base_url is not None else settings.API_BASE_URL).rstrip("/")
         self.user_id = user_id if user_id is not None else settings.USER_ID
         self.timeout = timeout if timeout is not None else settings.API_TIMEOUT
         self.session = requests.Session()
